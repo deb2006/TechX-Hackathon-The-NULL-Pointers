@@ -1,4 +1,4 @@
-🛡️ Proof of Life — Real-Time Human Liveness Detection System
+🛡️ Proof of Life: Real-Time Human Liveness Detection System
 "Proof of life in a synthetic world."
 As deepfakes become indistinguishable from reality, security demands live, human-only verification.
 
@@ -40,10 +40,12 @@ MediaPipe (Google Colab AI Model)
 FastAPI Backend (Replit)
         ↓
 JWT Token Generation
+
+
 🔹 Frontend
 HTML5
 
-CSS3 (Dark Theme UI)
+CSS3
 
 Vanilla JavaScript
 
@@ -65,11 +67,12 @@ FastAPI
 
 JWT Authentication
 
-Token Expiry (5 Minutes)
+Token 
 
 REST API Validation Endpoint
 
 ✨ Features
+
 🌙 Modern dark theme UI
 
 ⚡ Real-time facial landmark processing
@@ -100,6 +103,7 @@ Backend validates session
 JWT token is issued (valid for 5 minutes)
 
 🛠️ Setup Instructions
+
 1️⃣ Start the AI Model (Google Colab)
 Open your MediaPipe Colab notebook
 
@@ -113,13 +117,15 @@ Copy the generated public HTTPS URL
 In script.js, replace:
 
 js
-Copy code
+
 const COLAB_URL = "YOUR_COLAB_URL_HERE";
 With:
 
 js
-Copy code
+
 const COLAB_URL = "https://your-ngrok-url.ngrok.io";
+
+
 3️⃣ Start Backend (Replit / Local)
 If running locally:
 
