@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof of Life — Liveness Verification</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">◉</span>
+                    <span class="logo-text">Proof of Life</span>
+                </div>
+                <div class="header-badge">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">Liveness Check v1.0</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Hero Section -->
+                <div class="hero">
+                    <h1 class="hero-title">
+                        Verify <span class="gradient-text">Human Presence</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Complete two simple actions to generate your secure proof-of-life token
+                    </p>
+                </div>
+
+                <!-- Progress Bar -->
+                <div class="progress-container">
+                    <div class="progress-steps">
+                        <div class="progress-step" id="step-blink" data-completed="false">
+                            <div class="step-indicator">1</div>
+                            <span class="step-label">Blink twice</span>
+                        </div>
+                        <div class="progress-connector"></div>
+                        <div class="progress-step" id="step-smile" data-completed="false">
+                            <div class="step-indicator">2</div>
+                            <span class="step-label">Smile</span>
+                        </div>
+                        <div class="progress-connector"></div>
+                        <div class="progress-step" id="step-verify" data-completed="false">
+                            <div class="step-indicator">3</div>
+                            <span class="step-label">Verify</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Camera Card -->
+                <div class="camera-card">
+                    <div class="camera-header">
+                        <div class="camera-header-left">
+                            <span class="camera-title">Camera Feed</span>
+                            <span class="camera-badge" id="camera-badge">Active</span>
+                        </div>
+                        <div class="camera-stats" id="camera-stats">
+                            <span class="stat-item">
+                                <span class="stat-dot"></span>
+                                <span id="face-stat">No face</span>
+                            </span>
+                            <span class="stat-item">
+                                <span class="stat-icon">👁️</span>
+                                <span id="blink-stat">0/2</span>
+                            </span>
+                            <span class="stat-item">
+                                <span class="stat-icon">😊</span>
+                                <span id="smile-stat">—</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="camera-container">
+                        <video id="video" autoplay playsinline></video>
+                        <canvas id="canvas" style="display: none;"></canvas>
+                        
+                        <!-- Face Overlay Guide -->
+                        <div class="face-guide" id="face-guide">
+                            <div class="face-ring"></div>
+                            <div class="face-message" id="face-message">Position your face here</div>
+                        </div>
+
+                        <!-- Capture Overlay -->
+                        <div class="capture-overlay" id="capture-overlay">
+                            <div class="capture-pulse"></div>
+                        </div>
+                    </div>
+
+                    <!-- Action Prompts -->
+                    <div class="action-prompt" id="action-prompt">
+                        <div class="prompt-icon">👆</div>
+                        <div class="prompt-text" id="prompt-text">Waiting for face detection...</div>
+                    </div>
+                </div>
+
+                <!-- Token Section -->
+                <div class="token-section" id="token-section" style="display: none;">
+                    <div class="token-card">
+                        <div class="token-header">
+                            <div class="token-header-left">
+                                <span class="token-icon">🔑</span>
+                                <span class="token-title">Proof-of-Life Token</span>
+                            </div>
+                            <span class="token-badge">Valid for 5 min</span>
+                        </div>
+                        <div class="token-content">
+                            <div class="token-value" id="token-value"></div>
+                            <button class="token-copy-btn" id="copy-token">
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                        <div class="token-footer" id="token-expiry"></div>
+                    </div>
+                </div>
+
+                <!-- Verify Button -->
+                <button class="verify-button" id="verify-btn" disabled>
+                    <span class="btn-text">Generate Proof-of-Life Token</span>
+                    <span class="btn-icon">→</span>
+                </button>
+
+                <!-- Status Message (Hidden by default, shows for errors) -->
+                <div class="status-toast" id="status-toast" style="display: none;">
+                    <span class="toast-icon">⚠️</span>
+                    <span class="toast-message" id="toast-message"></span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <span>© 2024 Proof of Life</span>
+                <span class="footer-divider">·</span>
+                <span>Secure Liveness Verification</span>
+                <span class="footer-divider">·</span>
+                <span class="footer-session">Session: <span id="session-id"></span></span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
