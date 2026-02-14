@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Proof of Life Medal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: radial-gradient(circle at center, #0a0a0a, #000000);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            overflow: hidden;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        input {
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            text-align: center;
+        }
+
+        button {
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: none;
+            margin-left: 10px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #00f5ff, #00ff9d);
+            font-weight: bold;
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, transparent, #00ffcc, transparent);
+            top: 0;
+            animation: scan 3s linear forwards;
+            display: none;
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* Medal */
+        .medal-container {
+            margin-top: 40px;
+            perspective: 1000px;
+            display: none;
+        }
+
+        .medal {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #00ffcc, #003333);
+            border: 8px solid #00ffcc;
+            box-shadow: 0 0 40px #00ffcc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transform-style: preserve-3d;
+        }
+
+        .rotate {
+            animation: spin 2s ease forwards;
+        }
+
+        @keyframes spin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        .medal-text {
+            font-size: 18px;
+            color: black;
+        }
+
+        #downloadBtn {
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scan-line" id="scan"></div>
+
+    <h1>Proof of Life Medal</h1>
+    <div>
+        <input type="text" id="username" placeholder="Enter your name">
+        <button onclick="startScan()">Verify</button>
+    </div>
+
+    <div class="medal-container" id="medalContainer">
+        <div class="medal" id="medal">
+            <div class="medal-text" id="medalText"></div>
+        </div>
+    </div>
+
+    <button id="downloadBtn">Download Medal</button>
+
+    <script>
+        function startScan() {
+            let name = document.getElementById("username").value.trim();
+            if (name === "") {
+                alert("Enter your name first!");
+                return;
+            }
+
+            let scan = document.getElementById("scan");
+            let medalContainer = document.getElementById("medalContainer");
+            let medal = document.getElementById("medal");
+            let medalText = document.getElementById("medalText");
+            let downloadBtn = document.getElementById("downloadBtn");
+
+            medalContainer.style.display = "none";
+            downloadBtn.style.display = "none";
+
+            scan.style.display = "block";
+            scan.style.animation = "none";
+            void scan.offsetWidth;
+            scan.style.animation = "scan 3s linear forwards";
+
+            setTimeout(() => {
+                scan.style.display = "none";
+                medalText.innerHTML = name + "<br>VERIFIED<br>AS HUMAN";
+                medalContainer.style.display = "block";
+
+                medal.classList.remove("rotate");
+                void medal.offsetWidth;
+                medal.classList.add("rotate");
+
+                generateMedalImage(name);
+            }, 3000);
+        }
+
+        function generateMedalImage(name) {
+            let canvas = document.createElement("canvas");
+            canvas.width = 800;
+            canvas.height = 800;
+            let ctx = canvas.getContext("2d");
+
+            // Background circle
+            let gradient = ctx.createRadialGradient(400, 400, 100, 400, 400, 400);
+            gradient.addColorStop(0, "#00ffcc");
+            gradient.addColorStop(1, "#003333");
+
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(400, 400, 350, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Border
+            ctx.lineWidth = 15;
+            ctx.strokeStyle = "#00ffcc";
+            ctx.stroke();
+
+            // Text
+            ctx.fillStyle = "black";
+            ctx.font = "bold 50px Orbitron";
+            ctx.textAlign = "center";
+            ctx.fillText(name, 400, 360);
+            ctx.fillText("VERIFIED", 400, 430);
+            ctx.fillText("AS HUMAN", 400, 500);
+
+            let imageURL = canvas.toDataURL("image/png");
+
+            let downloadBtn = document.getElementById("downloadBtn");
+            downloadBtn.style.display = "block";
+            downloadBtn.onclick = function() {
+                let a = document.createElement("a");
+                a.href = imageURL;
+                a.download = name + "_human_medal.png";
+                a.click();
+            };
+        }
+    </script>
+
+</body>
+</html>
